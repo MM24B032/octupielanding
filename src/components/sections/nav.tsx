@@ -13,12 +13,26 @@ const links = [
 ];
 
 export function Nav() {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(
+    typeof window !== "undefined" ? window.scrollY > 24 : false,
+  );
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
+    let ticking = false;
+    let lastState = window.scrollY > 24;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const next = window.scrollY > 24;
+        if (next !== lastState) {
+          lastState = next;
+          setScrolled(next);
+        }
+        ticking = false;
+      });
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -29,7 +43,7 @@ export function Nav() {
         className={[
           "flex w-full items-center justify-between rounded-full border px-4 py-2 transition-all duration-300",
           scrolled
-            ? "max-w-[1100px] border-white/10 bg-[#040E22]/80 shadow-[0_8px_30px_rgba(0,0,0,0.35)] backdrop-blur-md"
+            ? "max-w-[1100px] border-white/10 bg-[#040E22]/95 shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
             : "max-w-[1280px] border-transparent bg-transparent",
         ].join(" ")}
       >
@@ -65,7 +79,7 @@ export function Nav() {
       </div>
 
       {open && (
-        <div className="fixed inset-x-4 top-20 z-40 rounded-2xl border border-white/10 bg-[#040E22]/95 p-6 backdrop-blur-md md:hidden">
+        <div className="fixed inset-x-4 top-20 z-40 rounded-2xl border border-white/10 bg-[#040E22] p-6 md:hidden">
           <div className="flex flex-col gap-4">
             {links.map((l) => (
               <a

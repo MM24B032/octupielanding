@@ -95,7 +95,16 @@
     -webkit-font-smoothing: antialiased;
   }
   html {
-    scroll-behavior: smooth;
+    /* Native wheel scrolling. Only smooth for anchor jumps and only when
+       the user has not requested reduced motion. Applied via :focus-within
+       so mouse-wheel scrolls use the browser default (no sticky easing). */
+    scroll-behavior: auto;
+    overscroll-behavior-y: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html:focus-within {
+      scroll-behavior: smooth;
+    }
   }
   h1,h2,h3,h4,h5,h6 {
     font-family: var(--font-host-grotesk), "Host Grotesk", Arial, sans-serif;
@@ -146,5 +155,16 @@
   }
   .divider-line {
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  }
+  /* Isolate off-screen sections so their paint does not hit scroll frames. */
+  .scroll-optimize {
+    content-visibility: auto;
+    contain-intrinsic-size: 800px;
+  }
+  /* GPU-compositing hint for long-running transform animations. */
+  .gpu-layer {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 }

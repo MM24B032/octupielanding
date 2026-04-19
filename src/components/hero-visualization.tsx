@@ -54,9 +54,9 @@ export function HeroVisualization({ className = "" }: Props) {
 
       {/* phase headers */}
       {[
-        { x: 170, label: "1. Track Instagram creators" },
-        { x: 540, label: "2. Octupie analyses outliers" },
-        { x: 910, label: "3. Ready to post in your voice" },
+        { x: 195, label: "1. Track Instagram creators" },
+        { x: 578, label: "2. Octupie analyses outliers" },
+        { x: 950, label: "3. Ready to post in your voice" },
       ].map((p) => (
         <text
           key={p.x}
@@ -74,11 +74,11 @@ export function HeroVisualization({ className = "" }: Props) {
       ))}
 
       {/* simple connectors between stages */}
-      <line x1="320" y1="280" x2="430" y2="280" stroke="rgba(76,97,255,0.55)" strokeWidth="1.5" strokeDasharray="4 6" />
-      <polygon points="430,280 422,275 422,285" fill="rgba(76,97,255,0.85)" />
+      <line x1="320" y1="280" x2="378" y2="280" stroke="rgba(76,97,255,0.55)" strokeWidth="1.5" strokeDasharray="4 6" />
+      <polygon points="378,280 370,275 370,285" fill="rgba(76,97,255,0.85)" />
 
-      <line x1="660" y1="280" x2="770" y2="280" stroke="rgba(76,97,255,0.55)" strokeWidth="1.5" strokeDasharray="4 6" />
-      <polygon points="770,280 762,275 762,285" fill="rgba(76,97,255,0.85)" />
+      <line x1="780" y1="280" x2="828" y2="280" stroke="rgba(76,97,255,0.55)" strokeWidth="1.5" strokeDasharray="4 6" />
+      <polygon points="828,280 820,275 820,285" fill="rgba(76,97,255,0.85)" />
 
       {/* ===== Stage 1: Instagram creator feed ===== */}
       <g transform="translate(70 90)">
@@ -169,16 +169,17 @@ export function HeroVisualization({ className = "" }: Props) {
         </g>
       </g>
 
-      {/* ===== Stage 2: Octupie engine + analysis chips ===== */}
-      <g transform="translate(440 90)">
-        {/* engine card with real Octupie brandmark */}
+      {/* ===== Stage 2: Octupie engine (left) + analysis chips (right) ===== */}
+      {/* outer width 380: engine 160 + 30 gap + chips 190 */}
+      <g transform="translate(388 90)">
+        {/* engine card */}
         <g transform="translate(0 110)">
-          <rect width="220" height="160" rx="20" fill="#0a1636" stroke="rgba(76,97,255,0.55)" strokeWidth="1.5" />
+          <rect width="160" height="180" rx="20" fill="#0a1636" stroke="rgba(76,97,255,0.55)" strokeWidth="1.5" />
 
-          {/* Octupie logo, centred */}
-          <g transform="translate(110 56)">
+          {/* Octupie brandmark, centred */}
+          <g transform="translate(80 56)">
             <rect x="-22" y="-22" width="44" height="44" rx="10" fill="url(#hv-accent)" />
-            <g fill="#ffffff" transform="scale(1)">
+            <g fill="#ffffff">
               <circle cx="0" cy="-14" r="2" />
               <circle cx="9.9" cy="-9.9" r="2" />
               <circle cx="14" cy="0" r="2" />
@@ -192,38 +193,38 @@ export function HeroVisualization({ className = "" }: Props) {
             <circle cx="0" cy="0" r="2.4" fill="url(#hv-accent)" />
           </g>
 
-          <text x="110" y="106" textAnchor="middle" fontFamily="Inter, sans-serif" fontSize="16" fontWeight="700" fill="#fff">
+          <text x="80" y="116" textAnchor="middle" fontFamily="Inter, sans-serif" fontSize="16" fontWeight="700" fill="#fff">
             Octupie
           </text>
-          <text x="110" y="124" textAnchor="middle" fontFamily="Inter, sans-serif" fontSize="9" fontWeight="700" fill="rgba(155,178,255,0.7)" letterSpacing="2">
+          <text x="80" y="134" textAnchor="middle" fontFamily="Inter, sans-serif" fontSize="9" fontWeight="700" fill="rgba(155,178,255,0.7)" letterSpacing="2">
             READING THE OUTLIER
           </text>
-          <circle cx="110" cy="142" r="3" fill="#4C61FF" className="hv-blink" />
+          <circle cx="80" cy="156" r="3" fill="#4C61FF" className="hv-blink" />
         </g>
 
-        {/* 3 analysis chips, vertical column to the right of the engine */}
+        {/* short connector engine -> first chip */}
+        <line x1="160" y1="200" x2="190" y2="200" stroke="rgba(76,97,255,0.55)" strokeWidth="1.5" strokeDasharray="3 5" />
+
+        {/* 3 analysis chips stacked to the right of the engine */}
         {[
-          { y: 0, label: "Hook", val: "Pattern interrupt" },
-          { y: 70, label: "Beats", val: "3 beats, 2.5s each" },
-          { y: 140, label: "Style", val: "Talking head + caption" },
+          { y: 110, label: "Hook", val: "Pattern interrupt" },
+          { y: 178, label: "Beats", val: "3 beats, 2.5s each" },
+          { y: 246, label: "Style", val: "Talking head + caption" },
         ].map((c, i) => (
-          <g key={i} transform={`translate(0 ${c.y})`}>
-            {/* chips centered vertically with the engine */}
-            <g transform="translate(0 80)">
-              <rect width="220" height="56" rx="12" fill="url(#hv-chip)" stroke="rgba(76,97,255,0.4)" />
-              <text x="16" y="22" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="700" fill="#9BB2FF" letterSpacing="1.5">
-                {c.label.toUpperCase()}
-              </text>
-              <text x="16" y="40" fontFamily="Inter, sans-serif" fontSize="12" fontWeight="500" fill="#fff">
-                {c.val}
-              </text>
-            </g>
+          <g key={i} transform={`translate(190 ${c.y})`}>
+            <rect width="190" height="56" rx="12" fill="url(#hv-chip)" stroke="rgba(76,97,255,0.4)" />
+            <text x="16" y="22" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="700" fill="#9BB2FF" letterSpacing="1.5">
+              {c.label.toUpperCase()}
+            </text>
+            <text x="16" y="40" fontFamily="Inter, sans-serif" fontSize="12" fontWeight="500" fill="#fff">
+              {c.val}
+            </text>
           </g>
         ))}
       </g>
 
       {/* ===== Stage 3: Output panel ===== */}
-      <g transform="translate(780 90)">
+      <g transform="translate(830 90)">
         <rect width="240" height="380" rx="20" fill="url(#hv-chip)" stroke="rgba(76,97,255,0.45)" />
 
         {/* header tabs */}

@@ -190,7 +190,7 @@ function Marquee({
   return (
     <div className="relative flex overflow-hidden">
       <div
-        className="flex shrink-0 animate-[marquee_60s_linear_infinite] gap-0"
+        className="gpu-layer flex shrink-0 animate-[marquee_60s_linear_infinite] gap-0"
         style={{
           animationDirection: reverse ? "reverse" : "normal",
         }}
