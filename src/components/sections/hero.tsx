@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { assets } from "@/lib/assets";
 import { WaitlistForm } from "@/components/waitlist-form";
+import { InstagramIcon, LinkedInIcon } from "@/components/social-icons";
 
 export function Hero() {
   return (
@@ -37,7 +38,13 @@ export function Hero() {
                 unoptimized
               />
             </span>
-            <span>Built with Instagram creators (LinkedIn coming soon)</span>
+            <span className="inline-flex items-center gap-1.5">
+              Built with
+              <InstagramIcon className="h-3.5 w-3.5" />
+              creators (
+              <LinkedInIcon className="h-3.5 w-3.5 opacity-70" />
+              coming soon)
+            </span>
           </div>
 
           <h1 className="mt-6 font-heading text-[40px] leading-[1.05] tracking-tight text-white sm:text-[52px] md:text-[68px]">

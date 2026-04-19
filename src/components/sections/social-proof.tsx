@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { assets } from "@/lib/assets";
+import { InstagramIcon, LinkedInIcon } from "@/components/social-icons";
 
 type Testimonial = { name: string; avatar: string; quote: string };
 
@@ -158,8 +159,12 @@ export function SocialProof() {
           </div>
         </div>
 
-        <p className="mt-10 text-center text-xs font-medium uppercase tracking-[0.22em] text-white/50">
-          Built with Instagram creators in the loop. LinkedIn coming soon.
+        <p className="mt-10 flex items-center justify-center gap-2 text-center text-xs font-medium uppercase tracking-[0.22em] text-white/50">
+          <span>Built with</span>
+          <InstagramIcon className="h-4 w-4" />
+          <span>creators in the loop.</span>
+          <LinkedInIcon className="h-4 w-4 opacity-80" />
+          <span>coming soon.</span>
         </p>
       </div>
 

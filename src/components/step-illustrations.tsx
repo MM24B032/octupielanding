@@ -85,34 +85,38 @@ export function PickCreatorsStep({ className }: Props) {
           { name: "@mrcreator.studio", meta: "182k followers · Reels", style: { animationDelay: "0.24s" } },
           { name: "@mr_creator_official", meta: "98k followers · Reels", style: { animationDelay: "0.36s" } },
         ].map((r, i) => (
-          <g key={i} className="step1-row" transform={`translate(0 ${i * 50})`} style={r.style}>
-            <rect
-              x="6"
-              y="6"
-              width="428"
-              height="42"
-              rx="10"
-              fill={r.active ? "rgba(76,97,255,0.12)" : "transparent"}
-              stroke={r.active ? "rgba(76,97,255,0.45)" : "transparent"}
-            />
-            <circle cx="32" cy="27" r="14" fill="#E1306C" opacity="0.85" />
-            <text x="32" y="31" textAnchor="middle" fontFamily="Inter, sans-serif" fontSize="11" fontWeight="700" fill="#fff">
-              IG
-            </text>
-            <text x="58" y="24" fontFamily="Inter, sans-serif" fontSize="13" fontWeight="600" fill="#fff">
-              {r.name}
-            </text>
-            <text x="58" y="40" fontFamily="Inter, sans-serif" fontSize="10" fill="rgba(255,255,255,0.55)">
-              {r.meta}
-            </text>
-            {r.active && (
-              <g transform="translate(380 14)">
-                <rect width="40" height="22" rx="11" fill="#014CE3" />
-                <text x="20" y="15" textAnchor="middle" fontFamily="Inter, sans-serif" fontSize="9" fontWeight="700" fill="#fff">
-                  ADD
-                </text>
-              </g>
-            )}
+          // Outer <g> for SVG positioning, inner <g> for CSS animation
+          // (CSS transform would otherwise wipe the outer translate).
+          <g key={i} transform={`translate(0 ${i * 50})`}>
+            <g className="step1-row" style={r.style}>
+              <rect
+                x="6"
+                y="6"
+                width="428"
+                height="42"
+                rx="10"
+                fill={r.active ? "rgba(76,97,255,0.12)" : "transparent"}
+                stroke={r.active ? "rgba(76,97,255,0.45)" : "transparent"}
+              />
+              <circle cx="32" cy="27" r="14" fill="#E1306C" opacity="0.85" />
+              <text x="32" y="31" textAnchor="middle" fontFamily="Inter, sans-serif" fontSize="11" fontWeight="700" fill="#fff">
+                IG
+              </text>
+              <text x="58" y="24" fontFamily="Inter, sans-serif" fontSize="13" fontWeight="600" fill="#fff">
+                {r.name}
+              </text>
+              <text x="58" y="40" fontFamily="Inter, sans-serif" fontSize="10" fill="rgba(255,255,255,0.55)">
+                {r.meta}
+              </text>
+              {r.active && (
+                <g transform="translate(380 14)">
+                  <rect width="40" height="22" rx="11" fill="#014CE3" />
+                  <text x="20" y="15" textAnchor="middle" fontFamily="Inter, sans-serif" fontSize="9" fontWeight="700" fill="#fff">
+                    ADD
+                  </text>
+                </g>
+              )}
+            </g>
           </g>
         ))}
       </g>
@@ -192,20 +196,24 @@ export function SurfaceOutliersStep({ className }: Props) {
         );
       })}
 
-      {/* OUTLIER flag (positioned in raw SVG coords above the tall bar, no parent transform) */}
+      {/* OUTLIER flag — outer <g> positions via SVG attr transform,
+           inner <g> handles the float animation so the CSS transform
+           from the keyframe does NOT overwrite the outer positioning. */}
       {(() => {
         const i = bars.findIndex((b) => b.outlier);
         if (i < 0) return null;
-        const cx = 80 + i * 50 + 16; // bar center x
-        const flagY = baseY - bars[i].h - 38; // 38px above the top of the bar
+        const cx = 80 + i * 50 + 16; // bar center x in viewBox
+        const flagY = baseY - bars[i].h - 40; // 40px above the top of the bar
         return (
-          <g className="step2-flag" transform={`translate(${cx} ${flagY})`}>
-            <rect x="-44" y="0" width="88" height="26" rx="13" fill="#0a1636" stroke="rgba(76,97,255,0.6)" />
-            <circle cx="-30" cy="13" r="4" fill="#4C61FF" />
-            <text x="-20" y="17" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="700" fill="#fff">
-              OUTLIER
-            </text>
-            <polygon points="-6,26 0,32 6,26" fill="#0a1636" stroke="rgba(76,97,255,0.6)" />
+          <g transform={`translate(${cx} ${flagY})`}>
+            <g className="step2-flag">
+              <rect x="-44" y="0" width="88" height="26" rx="13" fill="#0a1636" stroke="rgba(76,97,255,0.6)" />
+              <circle cx="-30" cy="13" r="4" fill="#4C61FF" />
+              <text x="-20" y="17" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="700" fill="#fff">
+                OUTLIER
+              </text>
+              <polygon points="-6,26 0,32 6,26" fill="#0a1636" stroke="rgba(76,97,255,0.6)" />
+            </g>
           </g>
         );
       })()}

@@ -74,6 +74,11 @@ export function TrackCreatorsIllustration({ className }: Props) {
           <stop offset="0%" stopColor="#15223C" />
           <stop offset="100%" stopColor="#0a1530" />
         </linearGradient>
+        <linearGradient id="track-ig" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#F58529" />
+          <stop offset="50%" stopColor="#DD2A7B" />
+          <stop offset="100%" stopColor="#8134AF" />
+        </linearGradient>
       </defs>
       <rect width="640" height="250" fill="url(#track-bg)" />
       <g stroke="rgba(255,255,255,0.04)" strokeWidth="1">
@@ -92,11 +97,11 @@ export function TrackCreatorsIllustration({ className }: Props) {
         .oct-row-2 { animation: oct-pulse-b 3.2s ease-in-out infinite 0.4s; }
         .oct-row-3 { animation: oct-pulse-a 3.2s ease-in-out infinite 0.8s; }
       `}</style>
-      {/* platform chips (IG live, IN soon) */}
+      {/* platform chips (IG live, LinkedIn soon) */}
       {[
-        { x: 60, y: 30, label: "IG", color: "#E1306C", live: true },
-        { x: 60, y: 100, label: "IG", color: "#E1306C", live: true },
-        { x: 60, y: 170, label: "IN", color: "#0A66C2", live: false },
+        { x: 60, y: 30, type: "ig" as const, live: true },
+        { x: 60, y: 100, type: "ig" as const, live: true },
+        { x: 60, y: 170, type: "li" as const, live: false },
       ].map((c, i) => (
         <g key={i} className={`oct-row-${i + 1}`}>
           <rect
@@ -109,18 +114,24 @@ export function TrackCreatorsIllustration({ className }: Props) {
             stroke="rgba(255,255,255,0.08)"
             opacity={c.live ? 1 : 0.6}
           />
-          <circle cx={c.x + 25} cy={c.y + 25} r="12" fill={c.color} opacity={c.live ? 0.95 : 0.5} />
-          <text
-            x={c.x + 25}
-            y={c.y + 29}
-            textAnchor="middle"
-            fontFamily="Inter, sans-serif"
-            fontSize="11"
-            fontWeight="700"
-            fill="#fff"
-          >
-            {c.label}
-          </text>
+          <g transform={`translate(${c.x + 13} ${c.y + 13})`} opacity={c.live ? 1 : 0.55}>
+            {c.type === "ig" ? (
+              <g>
+                <rect width="24" height="24" rx="6" fill="url(#track-ig)" />
+                <rect x="5" y="5" width="14" height="14" rx="4" fill="none" stroke="#fff" strokeWidth="1.8" />
+                <circle cx="12" cy="12" r="3.2" fill="none" stroke="#fff" strokeWidth="1.8" />
+                <circle cx="17" cy="7" r="1" fill="#fff" />
+              </g>
+            ) : (
+              <g>
+                <rect width="24" height="24" rx="4" fill="#0A66C2" />
+                <path
+                  d="M7.5 10v7H5v-7h2.5zM6.25 6.5a1.45 1.45 0 1 1 0 2.9 1.45 1.45 0 0 1 0-2.9zM10 10h2.4v1c.35-.6 1.25-1.2 2.55-1.2 2.7 0 3.05 1.7 3.05 4V17h-2.5v-2.8c0-.7 0-1.6-1-1.6s-1.1.8-1.1 1.5V17H10z"
+                  fill="#fff"
+                />
+              </g>
+            )}
+          </g>
           <rect x={c.x + 48} y={c.y + 14} width="96" height="5" rx="2.5" fill="rgba(255,255,255,0.5)" />
           <rect x={c.x + 48} y={c.y + 24} width="70" height="4" rx="2" fill="rgba(255,255,255,0.22)" />
           {!c.live && (
@@ -377,18 +388,22 @@ export function DailyIdeasIllustration({ className }: Props) {
           { y: 88, label: "Format: POV reaction", cls: "oct-float-3" },
           { y: 132, label: "Story beat: loop x3", cls: "oct-float-1" },
         ].map((c, i) => (
-          <g key={i} transform={`translate(0 ${c.y})`} className={c.cls}>
-            <rect
-              width="150"
-              height="34"
-              rx="10"
-              fill="#0a1636"
-              stroke="rgba(76,97,255,0.35)"
-            />
-            <circle cx="14" cy="17" r="4" fill="#4C61FF" />
-            <text x="26" y="21" fontFamily="Inter, sans-serif" fontSize="10" fill="rgba(255,255,255,0.85)">
-              {c.label}
-            </text>
+          // outer <g> positions, inner <g> runs the float animation so CSS
+          // transform keyframes do not overwrite the SVG attr transform.
+          <g key={i} transform={`translate(0 ${c.y})`}>
+            <g className={c.cls}>
+              <rect
+                width="150"
+                height="34"
+                rx="10"
+                fill="#0a1636"
+                stroke="rgba(76,97,255,0.35)"
+              />
+              <circle cx="14" cy="17" r="4" fill="#4C61FF" />
+              <text x="26" y="21" fontFamily="Inter, sans-serif" fontSize="10" fill="rgba(255,255,255,0.85)">
+                {c.label}
+              </text>
+            </g>
           </g>
         ))}
       </g>
