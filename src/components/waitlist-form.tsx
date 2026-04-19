@@ -48,6 +48,30 @@ export function WaitlistForm({
     }
   }
 
+  if (status === "ok") {
+    return (
+      <div
+        role="status"
+        aria-live="polite"
+        className="flex w-full items-center justify-center gap-2 rounded-full border border-[#4C61FF]/30 bg-[#4C61FF]/10 px-5 py-3 text-sm font-medium text-[#9BB2FF]"
+      >
+        <svg
+          viewBox="0 0 20 20"
+          aria-hidden
+          className="h-4 w-4 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M4 10.5l4 4 8-9" />
+        </svg>
+        <span>{message || "You're on the list. We'll be in touch soon."}</span>
+      </div>
+    );
+  }
+
   return (
     <form
       onSubmit={onSubmit}
@@ -82,13 +106,8 @@ export function WaitlistForm({
         {status === "loading" ? "Joining…" : ctaLabel}
         <span aria-hidden>→</span>
       </button>
-      {message && (
-        <p
-          className={[
-            "text-xs sm:basis-full sm:text-center",
-            status === "ok" ? "text-[#9BB2FF]" : "text-red-300",
-          ].join(" ")}
-        >
+      {status === "err" && message && (
+        <p className="text-xs text-red-300 sm:basis-full sm:text-center">
           {message}
         </p>
       )}
