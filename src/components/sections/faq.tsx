@@ -71,6 +71,12 @@ export function Faq() {
           >
             Contact us →
           </a>
+          <a
+            href="mailto:vishnu@octupie.com?subject=Octupie%20inquiry"
+            className="mt-2 block text-sm text-[#0B1430]/65 transition hover:text-[#014CE3] dark:text-white/65 dark:hover:text-[#4C61FF]"
+          >
+            vishnu@octupie.com
+          </a>
         </div>
 
         <div className="mt-10 flex justify-center">

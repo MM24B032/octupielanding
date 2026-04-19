@@ -15,6 +15,7 @@ const cols = [
     label: "Company",
     links: [
       { label: "Contact Us", href: "mailto:vishnu@octupie.com?subject=Octupie%20inquiry" },
+      { label: "vishnu@octupie.com", href: "mailto:vishnu@octupie.com?subject=Octupie%20inquiry" },
     ],
   },
 ];
