@@ -57,7 +57,7 @@ export function HowItWorks() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[380px_1fr]">
+        <div className="mt-12 grid grid-cols-1 items-start gap-8 lg:grid-cols-[380px_1fr]">
           <div className="flex flex-col gap-3">
             {steps.map((s, i) => (
               <button
@@ -91,12 +91,14 @@ export function HowItWorks() {
             ))}
           </div>
 
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#040E22] p-4">
-            <div className="card-gradient-border relative aspect-[16/10] overflow-hidden rounded-xl bg-[#040E22]">
-              <StepIllustration
-                key={current.illustration}
-                k={current.illustration}
-              />
+          <div className="relative lg:sticky lg:top-24">
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#040E22] p-3">
+              <div className="card-gradient-border relative aspect-[16/10] overflow-hidden rounded-xl bg-[#040E22]">
+                <StepIllustration
+                  key={current.illustration}
+                  k={current.illustration}
+                />
+              </div>
             </div>
           </div>
         </div>

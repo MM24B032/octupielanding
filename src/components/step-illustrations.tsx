@@ -32,7 +32,7 @@ function Frame({
       viewBox="0 0 600 380"
       xmlns="http://www.w3.org/2000/svg"
       className={`h-full w-full ${className}`}
-      preserveAspectRatio="xMidYMid slice"
+      preserveAspectRatio="xMidYMid meet"
     >
       {defs}
       <rect width="600" height="380" fill="url(#step-bg)" />
@@ -124,15 +124,15 @@ export function PickCreatorsStep({ className }: Props) {
 // Bar chart with one bar much taller (the outlier), highlighted.
 export function SurfaceOutliersStep({ className }: Props) {
   const bars = [
-    { h: 60, label: "12k" },
-    { h: 80, label: "18k" },
-    { h: 95, label: "22k" },
-    { h: 70, label: "15k" },
-    { h: 240, label: "412k", outlier: true },
-    { h: 88, label: "20k" },
-    { h: 105, label: "25k" },
-    { h: 75, label: "16k" },
-    { h: 90, label: "21k" },
+    { h: 50, label: "12k" },
+    { h: 68, label: "18k" },
+    { h: 80, label: "22k" },
+    { h: 58, label: "15k" },
+    { h: 200, label: "412k", outlier: true },
+    { h: 72, label: "20k" },
+    { h: 88, label: "25k" },
+    { h: 62, label: "16k" },
+    { h: 76, label: "21k" },
   ];
   const baseY = 320;
 

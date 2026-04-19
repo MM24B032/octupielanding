@@ -36,7 +36,7 @@ function Card({
       viewBox="0 0 400 250"
       xmlns="http://www.w3.org/2000/svg"
       className={`h-full w-full ${className}`}
-      preserveAspectRatio="xMidYMid slice"
+      preserveAspectRatio="xMidYMid meet"
     >
       {defs}
       <rect width="400" height="250" fill="url(#oct-card-bg)" />
@@ -452,10 +452,10 @@ export function TitlesCaptionsIllustration({ className }: Props) {
 // A pipeline of connected nodes: Research > Analyse > Script > Caption.
 export function AgenticFlowIllustration({ className }: Props) {
   const nodes = [
-    { x: 30, y: 100, label: "Research", icon: "🔎" },
-    { x: 130, y: 60, label: "Analyse", icon: "⚡" },
-    { x: 230, y: 140, label: "Script", icon: "✍" },
-    { x: 330, y: 80, label: "Caption", icon: "#" },
+    { x: 20, y: 100, label: "Research", icon: "🔎" },
+    { x: 120, y: 60, label: "Analyse", icon: "⚡" },
+    { x: 220, y: 140, label: "Script", icon: "✍" },
+    { x: 310, y: 80, label: "Caption", icon: "#" },
   ];
   return (
     <Card className={className}>
