@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   StepIllustration,
   type StepIllustrationKey,
@@ -45,39 +45,40 @@ const steps: Step[] = [
   },
 ];
 
-// Hover debounce. Rapid mouse movement across cards should not swap the
-// preview 4 times in 100ms (the source of the glitch). A short delay
-// smooths it out without feeling laggy.
-const HOVER_DELAY_MS = 80;
+// How long each step stays on screen before the carousel advances.
+// 4500ms is long enough to read the card copy + see the SVG, short
+// enough that a user watching the whole loop sees all 4 in 18s.
+const AUTO_INTERVAL_MS = 4500;
 
 export function HowItWorks() {
   const [active, setActive] = useState(0);
-  const [preview, setPreview] = useState<number>(0);
-  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Whenever the clicked step changes, sync preview immediately.
+  // Autoplay loop. Stops if the user takes manual control (click) or if
+  // they prefer reduced motion. Does NOT stop for hover so the preview
+  // is not tied to the mouse cursor.
   useEffect(() => {
-    setPreview(active);
-  }, [active]);
+    const reduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const schedulePreview = useCallback((i: number) => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
-    hoverTimer.current = setTimeout(() => setPreview(i), HOVER_DELAY_MS);
-  }, []);
+    if (isPaused || reduced) return;
 
-  const cancelHover = useCallback(() => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
-    // Revert to the persisted click state so the preview returns to where
-    // the user actually is, not whatever card they brushed past.
-    setPreview((prev) => prev);
-  }, []);
+    intervalRef.current = setInterval(() => {
+      setActive((prev) => (prev + 1) % steps.length);
+    }, AUTO_INTERVAL_MS);
 
-  // Clean up timer on unmount.
-  useEffect(() => {
     return () => {
-      if (hoverTimer.current) clearTimeout(hoverTimer.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, []);
+  }, [isPaused]);
+
+  // User took control: pause the carousel and jump to their pick.
+  const pickStep = (i: number) => {
+    setActive(i);
+    setIsPaused(true);
+  };
 
   return (
     <section id="how-it-works" className="relative overflow-x-clip py-20 md:py-28">
@@ -91,15 +92,13 @@ export function HowItWorks() {
             finished docs.
           </p>
 
-          {/* Flow pills. Bind to `active` (clicks), NOT `preview`, so
-              mouse hover over the left-hand cards does not retrigger the
-              pill row animation. */}
+          {/* Flow pills. Click to jump + pause autoplay. */}
           <div className="mt-8 hidden items-center justify-center gap-2 md:flex">
             {steps.map((s, i) => (
               <div key={s.shortLabel} className="flex items-center gap-2">
                 <button
                   type="button"
-                  onClick={() => setActive(i)}
+                  onClick={() => pickStep(i)}
                   className={[
                     "flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors duration-200",
                     active === i
@@ -150,27 +149,20 @@ export function HowItWorks() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 items-start gap-8 lg:grid-cols-[380px_1fr]">
-          {/* Left: step cards */}
+          {/* Left: step cards. Click pauses autoplay + jumps to that step. */}
           <div className="flex flex-col gap-3">
             {steps.map((s, i) => {
               const isActive = active === i;
-              const isPreviewed = preview === i;
               return (
                 <button
                   key={s.label}
                   type="button"
-                  onClick={() => setActive(i)}
-                  onMouseEnter={() => schedulePreview(i)}
-                  onMouseLeave={cancelHover}
-                  onFocus={() => setPreview(i)}
-                  onBlur={() => setPreview(active)}
+                  onClick={() => pickStep(i)}
                   className={[
                     "group relative overflow-hidden rounded-2xl border p-5 text-left transition-colors duration-200",
                     isActive
                       ? "border-[#014CE3]/50 bg-[#F0F4FF] dark:bg-[#0a1636]"
-                      : isPreviewed
-                        ? "border-[#014CE3]/25 bg-white hover:bg-white dark:border-white/15 dark:bg-[#050f24]"
-                        : "border-black/10 bg-white hover:border-black/20 dark:border-white/10 dark:bg-[#040E22] dark:hover:border-white/20",
+                      : "border-black/10 bg-white hover:border-black/20 dark:border-white/10 dark:bg-[#040E22] dark:hover:border-white/20",
                   ].join(" ")}
                 >
                   <div
@@ -189,9 +181,19 @@ export function HowItWorks() {
                   <div className="mt-1.5 text-sm text-[#0B1430]/65 dark:text-white/65">
                     {s.body}
                   </div>
+
+                  {/* Progress bar under the active card. Resets + refills
+                      over the interval while autoplay is running, parks
+                      full once the user pauses. */}
                   {isActive && (
                     <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-black/10 dark:bg-white/10">
-                      <div className="h-full w-1/3 bg-[#4C61FF]" />
+                      <div
+                        key={`${active}-${isPaused}`}
+                        className={[
+                          "h-full bg-[#4C61FF]",
+                          isPaused ? "w-full" : "hiw-progress",
+                        ].join(" ")}
+                      />
                     </div>
                   )}
                 </button>
@@ -199,19 +201,18 @@ export function HowItWorks() {
             })}
           </div>
 
-          {/* Right: pre-mounted illustrations, crossfade on preview change.
-              Sticky keeps the preview next to whichever card the user is on.
-              No key-based remount, no animation restart. */}
+          {/* Right: pre-mounted illustrations, crossfade on active change.
+              No remount, no animation restart. */}
           <div className="relative lg:sticky lg:top-24">
             <div className="overflow-hidden rounded-2xl border border-black/10 bg-white p-3 shadow-[0_1px_2px_rgba(11,20,48,0.04)] dark:border-white/10 dark:bg-[#040E22] dark:shadow-none">
               <div className="card-gradient-border relative aspect-[16/10] overflow-hidden rounded-xl bg-white dark:bg-[#040E22]">
                 {steps.map((s, i) => (
                   <div
                     key={s.illustration}
-                    aria-hidden={preview !== i}
+                    aria-hidden={active !== i}
                     className={[
-                      "absolute inset-0 transition-opacity duration-300 ease-out",
-                      preview === i ? "opacity-100" : "opacity-0",
+                      "absolute inset-0 transition-opacity duration-500 ease-out",
+                      active === i ? "opacity-100" : "opacity-0",
                     ].join(" ")}
                   >
                     <StepIllustration k={s.illustration} />
@@ -219,15 +220,15 @@ export function HowItWorks() {
                 ))}
               </div>
 
-              {/* Label strip. Crossfade text to match the illustration. */}
+              {/* Label strip crossfades with the illustration. */}
               <div className="relative mt-3 h-[58px]">
                 {steps.map((s, i) => (
                   <div
                     key={s.label}
-                    aria-hidden={preview !== i}
+                    aria-hidden={active !== i}
                     className={[
-                      "absolute inset-0 px-2 transition-opacity duration-300 ease-out",
-                      preview === i ? "opacity-100" : "opacity-0",
+                      "absolute inset-0 px-2 transition-opacity duration-500 ease-out",
+                      active === i ? "opacity-100" : "opacity-0",
                     ].join(" ")}
                   >
                     <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#014CE3] dark:text-[#4C61FF]">
@@ -243,6 +244,24 @@ export function HowItWorks() {
           </div>
         </div>
       </div>
+
+      {/* Progress-bar fill keyframes. Duration matches AUTO_INTERVAL_MS. */}
+      <style>{`
+        @keyframes hiw-fill {
+          from { width: 0%; }
+          to   { width: 100%; }
+        }
+        .hiw-progress {
+          width: 0%;
+          animation: hiw-fill ${AUTO_INTERVAL_MS}ms linear forwards;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hiw-progress {
+            animation: none;
+            width: 100%;
+          }
+        }
+      `}</style>
     </section>
   );
 }

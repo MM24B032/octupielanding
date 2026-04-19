@@ -149,18 +149,9 @@ export function SocialProof() {
         </div>
 
         <div className="mt-14 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-[#4C61FF]/30 bg-[#4C61FF]/15 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.22em] text-[#014CE3] dark:bg-[#4C61FF]/10 dark:text-[#9BB2FF]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#4C61FF]" />
-            Pre launch
-          </span>
-          <h2 className="mt-4 font-heading text-3xl leading-tight tracking-tight text-[#0B1430] md:text-[44px] dark:text-white">
+          <h2 className="font-heading text-3xl leading-tight tracking-tight text-[#0B1430] md:text-[44px] dark:text-white">
             Built for short form creators across every niche
           </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-sm text-[#0B1430]/65 md:text-base dark:text-white/65">
-            Octupie has not launched yet. The niches below are the creator
-            archetypes we are building the first release around. Join the
-            waitlist to help shape which one we ship support for next.
-          </p>
         </div>
 
         <p className="mt-8 flex flex-wrap items-center justify-center gap-2 text-center text-xs font-medium uppercase tracking-[0.22em] text-[#0B1430]/50 dark:text-white/50">
