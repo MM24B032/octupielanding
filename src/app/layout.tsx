@@ -17,23 +17,23 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Octupie | Your viral-content researcher & script-writing agent",
+  title: "Octupie | Your viral content researcher & scriptwriter",
   description:
     "The easiest way to research top channels, find viral outliers, and remix them into your own winning videos.",
   metadataBase: new URL("https://octupie.com"),
   openGraph: {
-    title: "Octupie | Your viral-content researcher & script-writing agent",
+    title: "Octupie | Your viral content researcher & scriptwriter",
     description:
-      "Research top channels, find viral outliers, and remix them into winning short-form videos.",
+      "Research top channels, find viral outliers, and remix them into winning short form videos.",
     url: "https://octupie.com",
     siteName: "Octupie",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Octupie | Your viral-content researcher & script-writing agent",
+    title: "Octupie | Your viral content researcher & scriptwriter",
     description:
-      "Research top channels, find viral outliers, and remix them into winning short-form videos.",
+      "Research top channels, find viral outliers, and remix them into winning short form videos.",
   },
 };
 

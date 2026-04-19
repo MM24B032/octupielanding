@@ -538,7 +538,7 @@ font-family: var(--font-inter), Inter, Arial, sans-serif;
       <container>mx-auto max-w-[900px] px-6.</container>
       <heading>
         <h2>Still have questions?</h2>
-        <contact-link>mailto:hello@octupie.com, text-sm text-[#4C61FF] hover:text-white, label "Contact us →".</contact-link>
+        <contact-link>mailto:vishnu@octupie.com?subject=Octupie%20inquiry, text-sm text-[#4C61FF] hover:text-white, label "Contact us →".</contact-link>
       </heading>
       <tab-switcher>inline-flex items-center gap-1 rounded-full border border-white/10 bg-[#040E22] p-1. Each tab rounded-full px-5 py-2 text-sm. Selected: bg-[#15223C] text-white shadow-[inset_0_2px_4px_rgba(255,255,255,0.12)]. Unselected: text-white/70 hover:text-white.</tab-switcher>
       <items>mt-10 space-y-3, each item rounded-2xl border border-white/10 bg-[#040E22] overflow-hidden.</items>
@@ -577,7 +577,7 @@ font-family: var(--font-inter), Inter, Arial, sans-serif;
         <link label="FAQ" href="#faq" />
       </link-column>
       <link-column title="Company">
-        <link label="Contact Us" href="mailto:hello@octupie.com" />
+        <link label="Contact Us" href="mailto:vishnu@octupie.com?subject=Octupie%20inquiry" />
       </link-column>
       <cta-column title="Get early access"><WaitlistButton /></cta-column>
       <bottom-bar>mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 md:flex-row md:items-center. Left: copyright "© YEAR Octupie. All rights reserved." Right: "octupie.com".</bottom-bar>
@@ -617,7 +617,7 @@ font-family: var(--font-inter), Inter, Arial, sans-serif;
     <rule>When describing scope, always state: Instagram Reels at launch, LinkedIn next.</rule>
     <rule>Tab title uses the pipe separator: "Octupie | ..." Never a dash.</rule>
     <rule>CTA label is "Join the Waitlist" (title case, capital W).</rule>
-    <rule>Contact email is hello@octupie.com (singular).</rule>
+    <rule>Contact email is vishnu@octupie.com (singular).</rule>
   </copy-invariants>
 
   <!-- ============================================================ -->

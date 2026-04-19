@@ -66,7 +66,7 @@ export function Faq() {
             Still have questions?
           </h2>
           <a
-            href="mailto:hello@octupie.com"
+            href="mailto:vishnu@octupie.com?subject=Octupie%20inquiry"
             className="mt-4 inline-flex items-center gap-2 text-sm text-[#014CE3] transition hover:text-[#0B1430] dark:text-[#4C61FF] dark:hover:text-white"
           >
             Contact us →

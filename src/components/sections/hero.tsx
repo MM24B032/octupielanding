@@ -18,15 +18,14 @@ export function Hero() {
             <span>coming soon)</span>
           </div>
 
-          <h1 className="mt-6 font-heading text-[clamp(32px,9vw,40px)] leading-[1.08] tracking-tight text-[#0B1430] text-balance break-words hyphens-auto sm:text-[52px] md:text-[60px] lg:text-[68px] sm:leading-[1.05] dark:text-white">
-            Your personal viral-content
-            <br className="hidden sm:block" /> researcher &amp; script-writing
-            <br className="hidden sm:block" /> agentic workflow
+          <h1 className="mt-6 font-heading text-[clamp(32px,9vw,40px)] leading-[1.08] tracking-tight text-[#0B1430] text-balance break-words sm:text-[52px] md:text-[60px] lg:text-[68px] sm:leading-[1.05] dark:text-white">
+            Your personal viral content
+            <br className="hidden sm:block" /> researcher &amp; scriptwriter
           </h1>
 
           <p className="mt-6 max-w-2xl text-base text-[#0B1430]/70 md:text-lg dark:text-white/70">
             The smarter way to research top creators, find viral content, and
-            implement it in your voice and style. End-to-end, not just a
+            implement it in your voice and style. End to end, not just a
             research tool.
           </p>
 

@@ -14,7 +14,7 @@ const cols = [
   {
     label: "Company",
     links: [
-      { label: "Contact Us", href: "mailto:hello@octupie.com" },
+      { label: "Contact Us", href: "mailto:vishnu@octupie.com?subject=Octupie%20inquiry" },
     ],
   },
 ];
@@ -27,8 +27,8 @@ export function Footer() {
           <div>
             <Wordmark />
             <p className="mt-4 max-w-sm text-sm text-[#0B1430]/60 dark:text-white/60">
-              Your personal viral-content researcher and script-writing agentic
-              workflow. Research top creators, recreate outliers in your voice.
+              Your personal viral content researcher and scriptwriter.
+              Research top creators, recreate outliers in your voice.
             </p>
           </div>
 
