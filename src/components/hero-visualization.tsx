@@ -54,9 +54,9 @@ export function HeroVisualization({ className = "" }: Props) {
 
       {/* phase headers - shortened where needed so each fits inside its column */}
       {[
-        { x: 195, label: "1. Track creators" },
-        { x: 578, label: "2. Analyse outliers" },
-        { x: 950, label: "3. Ready to post" },
+        { x: 165, label: "1. Track creators" },
+        { x: 548, label: "2. Analyse outliers" },
+        { x: 920, label: "3. Ready to post" },
       ].map((p) => (
         <text
           key={p.x}
@@ -74,14 +74,14 @@ export function HeroVisualization({ className = "" }: Props) {
       ))}
 
       {/* simple connectors between stages */}
-      <line x1="320" y1="280" x2="378" y2="280" stroke="rgba(76,97,255,0.55)" strokeWidth="1.5" strokeDasharray="4 6" />
-      <polygon points="378,280 370,275 370,285" fill="rgba(76,97,255,0.85)" />
+      <line x1="290" y1="280" x2="348" y2="280" stroke="rgba(76,97,255,0.55)" strokeWidth="1.5" strokeDasharray="4 6" />
+      <polygon points="348,280 340,275 340,285" fill="rgba(76,97,255,0.85)" />
 
-      <line x1="780" y1="280" x2="828" y2="280" stroke="rgba(76,97,255,0.55)" strokeWidth="1.5" strokeDasharray="4 6" />
-      <polygon points="828,280 820,275 820,285" fill="rgba(76,97,255,0.85)" />
+      <line x1="750" y1="280" x2="798" y2="280" stroke="rgba(76,97,255,0.55)" strokeWidth="1.5" strokeDasharray="4 6" />
+      <polygon points="798,280 790,275 790,285" fill="rgba(76,97,255,0.85)" />
 
       {/* ===== Stage 1: Instagram creator feed ===== */}
-      <g transform="translate(70 90)">
+      <g transform="translate(40 90)">
         <rect width="250" height="380" rx="22" fill="#0a1636" stroke="rgba(255,255,255,0.1)" />
         <rect x="14" y="14" width="222" height="352" rx="14" fill="url(#hv-chip)" />
 
@@ -172,7 +172,7 @@ export function HeroVisualization({ className = "" }: Props) {
       {/* ===== Stage 2: Octupie engine (left) + analysis chips (right) =====
            Same y-band as stages 1 and 3: y=90 to y=470 (380 tall).
            Layout: engine 160 wide left, 30px gap, chips column 190 wide right. */}
-      <g transform="translate(388 90)">
+      <g transform="translate(358 90)">
         {/* engine card - full height to match phone + output panels */}
         <g>
           <rect width="160" height="380" rx="20" fill="#0a1636" stroke="rgba(76,97,255,0.55)" strokeWidth="1.5" />
@@ -234,7 +234,7 @@ export function HeroVisualization({ className = "" }: Props) {
       </g>
 
       {/* ===== Stage 3: Output panel ===== */}
-      <g transform="translate(830 90)">
+      <g transform="translate(800 90)">
         <rect width="240" height="380" rx="20" fill="url(#hv-chip)" stroke="rgba(76,97,255,0.45)" />
 
         {/* header tabs */}
