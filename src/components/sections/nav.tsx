@@ -13,23 +13,25 @@ const links = [
 ];
 
 export function Nav() {
-  const [scrolled, setScrolled] = useState(
-    typeof window !== "undefined" ? window.scrollY > 24 : false,
-  );
+  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     let ticking = false;
-    let lastState = window.scrollY > 24;
+    let lastState = false;
+    const evaluate = () => {
+      const next = window.scrollY > 24;
+      if (next !== lastState) {
+        lastState = next;
+        setScrolled(next);
+      }
+    };
+    evaluate();
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
-        const next = window.scrollY > 24;
-        if (next !== lastState) {
-          lastState = next;
-          setScrolled(next);
-        }
+        evaluate();
         ticking = false;
       });
     };
